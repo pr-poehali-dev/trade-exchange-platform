@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import ListingCard from '@/components/listings/ListingCard';
@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 import { listings, categories } from '@/data/mockData';
+
+const PAGE_SIZE = 4;
 
 const statsData = [
   { value: '2.4M+', label: 'Объявлений', icon: '📋' },
@@ -18,16 +20,45 @@ const Home = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeType, setActiveType] = useState<'all' | 'sale' | 'exchange' | 'free'>('all');
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
   };
 
-  const featuredListings = listings.slice(0, 8);
-  const filteredListings = activeType === 'all'
-    ? featuredListings
-    : featuredListings.filter(l => l.type === activeType);
+  const allFiltered = activeType === 'all'
+    ? listings
+    : listings.filter(l => l.type === activeType);
+
+  const infinitePool = [...allFiltered, ...allFiltered, ...allFiltered, ...allFiltered].map((l, i) => ({ ...l, id: `${l.id}-${i}` }));
+  const visibleListings = infinitePool.slice(0, page * PAGE_SIZE);
+  const hasMore = page * PAGE_SIZE < infinitePool.length;
+
+  const loadMore = useCallback(() => {
+    if (isLoading || !hasMore) return;
+    setIsLoading(true);
+    setTimeout(() => {
+      setPage(p => p + 1);
+      setIsLoading(false);
+    }, 600);
+  }, [isLoading, hasMore]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [activeType]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => { if (entries[0].isIntersecting) loadMore(); },
+      { threshold: 0.1 }
+    );
+    const el = loaderRef.current;
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, [loadMore]);
 
   return (
     <Layout>
@@ -153,20 +184,31 @@ const Home = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filteredListings.map(listing => (
+          {visibleListings.map(listing => (
             <ListingCard key={listing.id} listing={listing} />
           ))}
         </div>
 
-        <div className="text-center mt-8">
-          <Button
-            onClick={() => navigate('/listings')}
-            variant="outline"
-            className="px-8 border-primary/30 text-primary hover:bg-primary/5"
-          >
-            Смотреть все объявления
-            <Icon name="ArrowRight" size={16} className="ml-2" />
-          </Button>
+        <div ref={loaderRef} className="mt-8 flex flex-col items-center gap-3">
+          {isLoading && (
+            <div className="flex items-center gap-2 text-muted-foreground text-sm">
+              <div className="w-5 h-5 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+              Загружаем ещё...
+            </div>
+          )}
+          {!hasMore && (
+            <div className="text-center">
+              <p className="text-muted-foreground text-sm mb-3">Вы посмотрели все объявления</p>
+              <Button
+                onClick={() => navigate('/listings')}
+                variant="outline"
+                className="px-8 border-primary/30 text-primary hover:bg-primary/5"
+              >
+                Перейти в каталог
+                <Icon name="ArrowRight" size={16} className="ml-2" />
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 

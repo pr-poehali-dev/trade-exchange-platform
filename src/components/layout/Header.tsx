@@ -34,8 +34,7 @@ const Header = () => {
               <span className="text-white font-bold text-lg">S</span>
             </div>
             <span className="font-bold text-xl hidden sm:block" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-              <span className="gradient-text">Swap</span>
-              <span className="text-foreground">World</span>
+              <span className="gradient-text">filipok</span>
             </span>
           </Link>
 
