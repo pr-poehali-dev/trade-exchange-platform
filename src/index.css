@@ -6,54 +6,55 @@
 
 @layer base {
   :root {
-    --background: 250 100% 99%;
-    --foreground: 240 10% 8%;
+    --background: 270 50% 8%;
+    --foreground: 0 0% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 8%;
+    --card: 270 40% 12%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 8%;
+    --popover: 270 40% 12%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 262 83% 58%;
+    --primary: 320 70% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 330 85% 60%;
+    --secondary: 280 60% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 10% 95%;
-    --muted-foreground: 240 5% 50%;
+    --muted: 270 30% 18%;
+    --muted-foreground: 270 15% 65%;
 
-    --accent: 174 72% 46%;
+    --accent: 340 65% 60%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 10% 90%;
-    --input: 240 10% 90%;
-    --ring: 262 83% 58%;
+    --border: 270 25% 25%;
+    --input: 270 25% 20%;
+    --ring: 320 70% 65%;
 
     --radius: 0.75rem;
 
     --neon-purple: #7c3aed;
-    --neon-pink: #ec4899;
-    --neon-teal: #14b8a6;
-    --neon-orange: #f97316;
-    --neon-yellow: #eab308;
+    --neon-pink: #c2185b;
+    --neon-teal: #7b1fa2;
+    --neon-orange: #ad1457;
+    --neon-yellow: #6a1b9a;
 
     --gradient-main: linear-gradient(
       135deg,
-      #7c3aed 0%,
-      #ec4899 50%,
-      #f97316 100%
+      #6a1b9a 0%,
+      #9c1b5a 40%,
+      #c62828 70%,
+      #7b1fa2 100%
     );
-    --gradient-cool: linear-gradient(135deg, #14b8a6 0%, #7c3aed 100%);
-    --gradient-warm: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+    --gradient-cool: linear-gradient(135deg, #7b1fa2 0%, #c62828 100%);
+    --gradient-warm: linear-gradient(135deg, #c62828 0%, #6a1b9a 100%);
     --gradient-card: linear-gradient(
       145deg,
-      rgba(124, 58, 237, 0.05) 0%,
-      rgba(236, 72, 153, 0.05) 100%
+      rgba(106, 27, 154, 0.06) 0%,
+      rgba(198, 40, 40, 0.06) 100%
     );
 
     --sidebar-background: 250 100% 99%;
@@ -103,8 +104,20 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
     font-family: "Inter", sans-serif;
+    background: linear-gradient(
+      -45deg,
+      #1a0030,
+      #3d0066,
+      #6a0020,
+      #2d0050,
+      #5c0028,
+      #1f0040
+    );
+    background-size: 400% 400%;
+    animation: bgShift 12s ease infinite;
+    min-height: 100vh;
   }
 
   h1,
@@ -142,17 +155,17 @@
   }
 
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .glass-dark {
-    background: rgba(15, 10, 30, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(20, 0, 40, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .neon-glow-purple {
@@ -175,7 +188,7 @@
 
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(124, 58, 237, 0.15);
+    box-shadow: 0 20px 60px rgba(106, 27, 154, 0.3);
   }
 
   .animate-float {
@@ -195,6 +208,18 @@
     );
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes bgShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -250,12 +275,12 @@
 }
 
 .tag-sale {
-  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  background: linear-gradient(135deg, #6a1b9a, #c62828);
   color: white;
 }
 
 .tag-exchange {
-  background: linear-gradient(135deg, #14b8a6, #7c3aed);
+  background: linear-gradient(135deg, #7b1fa2, #ad1457);
   color: white;
 }
 
@@ -274,5 +299,14 @@
 }
 
 .listing-card {
-  @apply bg-white rounded-2xl overflow-hidden border border-border card-hover cursor-pointer;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  @apply rounded-2xl overflow-hidden card-hover cursor-pointer;
+}
+
+.listing-card:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.22);
 }
