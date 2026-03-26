@@ -1,4 +1,5 @@
 export type ListingType = 'sale' | 'exchange' | 'free';
+export type Condition = 'new' | 'excellent' | 'good' | 'fair';
 
 export interface Listing {
   id: string;
@@ -11,6 +12,8 @@ export interface Listing {
   country: string;
   image: string;
   description: string;
+  condition: Condition;
+  delivery: boolean;
   seller: {
     name: string;
     avatar: string;
@@ -22,6 +25,13 @@ export interface Listing {
   isFavorite: boolean;
   exchangeFor?: string;
 }
+
+export const conditionLabels: Record<Condition, string> = {
+  new: 'Новый',
+  excellent: 'Отличное',
+  good: 'Хорошее',
+  fair: 'Удовлетворительное',
+};
 
 export interface Category {
   id: string;
@@ -54,6 +64,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop',
     description: 'Отличное состояние, полный комплект. Гарантия до 2025 года.',
+    condition: 'excellent',
+    delivery: true,
     seller: { name: 'Алексей К.', avatar: '', rating: 4.9, verified: true },
     createdAt: '2024-03-20',
     views: 1243,
@@ -70,6 +82,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?w=400&h=300&fit=crop',
     description: 'Меняю на электросамокат или сноуборд в хорошем состоянии.',
+    condition: 'good',
+    delivery: false,
     seller: { name: 'Сергей П.', avatar: '', rating: 4.7, verified: true },
     createdAt: '2024-03-19',
     views: 876,
@@ -87,6 +101,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=300&fit=crop',
     description: 'Отдам бесплатно. JavaScript, Python, Rust — все в отличном состоянии.',
+    condition: 'good',
+    delivery: true,
     seller: { name: 'Мария В.', avatar: '', rating: 5.0, verified: false },
     createdAt: '2024-03-21',
     views: 2109,
@@ -103,6 +119,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=300&fit=crop',
     description: 'PS5 дисковая версия, 2 геймпада, 5 игр в комплекте.',
+    condition: 'excellent',
+    delivery: true,
     seller: { name: 'Дмитрий С.', avatar: '', rating: 4.8, verified: true },
     createdAt: '2024-03-18',
     views: 3421,
@@ -119,6 +137,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=300&fit=crop',
     description: 'Обменяю на летнюю одежду или электронику.',
+    condition: 'good',
+    delivery: false,
     seller: { name: 'Анна Л.', avatar: '', rating: 4.6, verified: true },
     createdAt: '2024-03-17',
     views: 654,
@@ -136,6 +156,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop',
     description: 'MacBook Air M2, 8GB RAM, 256GB SSD. Как новый, 6 месяцев использования.',
+    condition: 'excellent',
+    delivery: true,
     seller: { name: 'Николай Р.', avatar: '', rating: 4.9, verified: true },
     createdAt: '2024-03-22',
     views: 2876,
@@ -152,6 +174,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop',
     description: 'Отдам самовывозом. Состояние хорошее, нет дефектов.',
+    condition: 'good',
+    delivery: false,
     seller: { name: 'Ольга М.', avatar: '', rating: 4.5, verified: false },
     createdAt: '2024-03-16',
     views: 4532,
@@ -168,6 +192,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=300&fit=crop',
     description: 'Canon EOS R6, пробег 5000 кадров. Два объектива в комплекте.',
+    condition: 'excellent',
+    delivery: true,
     seller: { name: 'Павел Т.', avatar: '', rating: 5.0, verified: true },
     createdAt: '2024-03-21',
     views: 1876,
@@ -184,6 +210,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=300&fit=crop',
     description: 'Куплен 2 месяца назад, полный комплект, чек есть.',
+    condition: 'new',
+    delivery: true,
     seller: { name: 'Иван Ф.', avatar: '', rating: 4.8, verified: true },
     createdAt: '2024-03-23',
     views: 987,
@@ -200,6 +228,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1591086782584-5a8f43c2e2f3?w=400&h=300&fit=crop',
     description: 'Меняю коляску на детский велосипед или самокат возраст 3-5 лет.',
+    condition: 'good',
+    delivery: false,
     seller: { name: 'Елена К.', avatar: '', rating: 4.7, verified: false },
     createdAt: '2024-03-22',
     views: 543,
@@ -217,6 +247,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop',
     description: 'Оригинал, б/у 2 месяца, отличное состояние.',
+    condition: 'excellent',
+    delivery: true,
     seller: { name: 'Артём Б.', avatar: '', rating: 4.6, verified: true },
     createdAt: '2024-03-20',
     views: 1120,
@@ -233,6 +265,8 @@ export const listings: Listing[] = [
     country: 'RU',
     image: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&h=300&fit=crop',
     description: 'Отдам в хорошие руки. Небольшая царапина на деке, звучит отлично.',
+    condition: 'fair',
+    delivery: false,
     seller: { name: 'Кирилл Ш.', avatar: '', rating: 4.9, verified: false },
     createdAt: '2024-03-19',
     views: 3210,

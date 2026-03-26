@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
-import { Listing, formatPrice } from '@/data/mockData';
+import { Listing, formatPrice, conditionLabels } from '@/data/mockData';
+
+const conditionColors = {
+  new: 'bg-emerald-100 text-emerald-700',
+  excellent: 'bg-blue-100 text-blue-700',
+  good: 'bg-amber-100 text-amber-700',
+  fair: 'bg-red-100 text-red-600',
+};
 
 interface ListingCardProps {
   listing: Listing;
@@ -62,15 +69,27 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           )}
         </div>
 
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
           <div className="flex items-center gap-1">
             <Icon name="MapPin" size={11} />
-            <span>{listing.location}, {listing.country}</span>
+            <span>{listing.location}</span>
           </div>
           <div className="flex items-center gap-1">
             <Icon name="Eye" size={11} />
             <span>{listing.views.toLocaleString()}</span>
           </div>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${conditionColors[listing.condition]}`}>
+            {conditionLabels[listing.condition]}
+          </span>
+          {listing.delivery && (
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-medium bg-teal-100 text-teal-700 flex items-center gap-1">
+              <Icon name="Truck" size={9} />
+              Доставка
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-border/40">
